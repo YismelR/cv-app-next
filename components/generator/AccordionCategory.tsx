@@ -45,7 +45,6 @@ export default function AccordionCategory({
                             eduData={eduData}
                             setIsSavedEdu={setIsSavedEdu}
                         />
-                        <FormContentButton name="Add More" />
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3">

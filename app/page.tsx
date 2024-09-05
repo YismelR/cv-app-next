@@ -11,12 +11,14 @@ function App() {
         email: "",
         phonenumber: "",
     });
-    const [eduData, setEduData] = useState({
-        schoolname: "",
-        studytitle: "",
-        startyear: "",
-        endyear: "",
-    });
+    const [eduData, setEduData] = useState<
+        Array<{
+            schoolname: string;
+            studytitle: string;
+            startyear: string;
+            endyear: string;
+        }>
+    >([]);
     const [expData, setExpData] = useState({
         companyname: "",
         positiontitle: "",
