@@ -7,7 +7,6 @@ type EducationalExpProps = {
     }>;
 };
 export default function EducationalExp({ eduData }: EducationalExpProps) {
-    console.log(eduData);
     return (
         <section>
             <h1 className="text-base font-semibold">Educational Experience</h1>
