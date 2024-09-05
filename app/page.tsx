@@ -19,13 +19,15 @@ function App() {
             endyear: string;
         }>
     >([]);
-    const [expData, setExpData] = useState({
-        companyname: "",
-        positiontitle: "",
-        startdate: "",
-        enddate: "",
-        workdescription: "",
-    });
+    const [expData, setExpData] = useState<
+        Array<{
+            companyname: string;
+            positiontitle: string;
+            startdate: string;
+            enddate: string;
+            workdescription: string;
+        }>
+    >([]);
     const [isSavedInfo, setIsSavedInfo] = useState(false);
     const [isSavedEdu, setIsSavedEdu] = useState(false);
     const [isSavedExp, setIsSavedExp] = useState(false);

@@ -7,7 +7,7 @@ export default function Resume({ formData, eduData, expData }: any) {
         <main className="bg-resumeBG flex flex-col text-black w-full p-10 text-xs gap-8 h-full">
             <GeneralInfo info={formData} />
             <EducationalExp eduData={eduData} />
-            <PracticalExp exp={expData} />
+            <PracticalExp expData={expData} />
         </main>
     );
 }
