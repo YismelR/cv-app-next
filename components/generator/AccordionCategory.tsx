@@ -7,6 +7,7 @@ import {
 import GeneralInfoForm from "./GeneralInfoForm";
 import EducationalExpForm from "./EducationalExpForm";
 import PracticalExpForm from "./PracticalExpForm";
+import FormContentButton from "./FormContentButton";
 
 export default function AccordionCategory({
     formSetter,
@@ -44,6 +45,7 @@ export default function AccordionCategory({
                             eduData={eduData}
                             setIsSavedEdu={setIsSavedEdu}
                         />
+                        <FormContentButton name="Add More" />
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3">
@@ -54,6 +56,7 @@ export default function AccordionCategory({
                             expData={expData}
                             setIsSavedExp={setIsSavedExp}
                         />
+                        <FormContentButton name="Add More" />
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
