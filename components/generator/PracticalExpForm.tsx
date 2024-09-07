@@ -198,6 +198,11 @@ export default function PracticalExpForm({
                                 </FormItem>
                             )}
                         />
+                        {fields.length > 1 && (
+                            <Button type="button" onClick={() => remove(idx)}>
+                                Remove
+                            </Button>
+                        )}
                     </div>
                 ))}
 
