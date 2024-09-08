@@ -53,14 +53,14 @@ export default function ResumeGenerated({
             <h1 className="font-bold text-3xl place-self-center">
                 CV/Resume Generated
             </h1>
-            <div ref={componentRef}>
+            <div ref={componentRef} className="h-full">
                 <Resume
                     formData={formData}
                     eduData={eduData}
                     expData={expData}
                 />
             </div>
-            <footer className="flex justify-between mt-auto">
+            <footer className="flex justify-between">
                 <SubmitButton name="Edit" onSubmit={handleEdit} />
                 <SubmitButton name="Download" onSubmit={handleDownload} />
             </footer>

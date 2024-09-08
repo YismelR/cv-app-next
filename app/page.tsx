@@ -23,8 +23,8 @@ function App() {
         Array<{
             companyname: string;
             positiontitle: string;
-            startdate: string;
-            enddate: string;
+            startdate: Date;
+            enddate: Date;
             workdescription: string;
         }>
     >([]);

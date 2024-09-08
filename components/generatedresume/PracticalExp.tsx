@@ -1,11 +1,11 @@
 import ResponsibilityList from "./ResponsibilityList";
-
+import { format } from "date-fns";
 type PracticalExpProps = {
     expData: Array<{
         companyname: string;
         positiontitle: string;
-        startdate: string;
-        enddate: string;
+        startdate: Date;
+        enddate: Date;
         workdescription: string;
     }>;
 };
@@ -23,8 +23,13 @@ export default function PracticalExp({ expData }: PracticalExpProps) {
                                 <p className="italic">{exp.positiontitle}</p>
                             </div>
                             <div className="italic">
-                                <p>Start Date: {exp.startdate}</p>
-                                <p>End Date: {exp.enddate}</p>
+                                <p>
+                                    Start Date:
+                                    {format(exp.startdate, "MM/yyyy")}
+                                </p>
+                                <p>
+                                    End Date: {format(exp.enddate, "MM/yyyy")}
+                                </p>
                             </div>
                         </div>
                         <ResponsibilityList listExp={exp} />

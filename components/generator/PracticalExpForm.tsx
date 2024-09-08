@@ -14,24 +14,30 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import FormContentButton from "./FormContentButton";
+import DatePicker from "@/components/generator/DatePicker";
 
-const experienceSchema = z.object({
-    companyname: z.string().min(2, {
-        message: "Company name must be at least 2 characters.",
-    }),
-    positiontitle: z.string().min(2, {
-        message: "Position title must be at least 2 characters.",
-    }),
-    startdate: z.string().min(2, {
-        message: "Start date must be at least 2 characters.",
-    }),
-    enddate: z.string().min(2, {
-        message: "End date must be at least 2 characters.",
-    }),
-    workdescription: z.string().min(2, {
-        message: "Main Responsibilities must be at least 2 characters.",
-    }),
-});
+const experienceSchema = z
+    .object({
+        companyname: z.string().min(2, {
+            message: "Company name must be at least 2 characters.",
+        }),
+        positiontitle: z.string().min(2, {
+            message: "Position title must be at least 2 characters.",
+        }),
+        startdate: z.date().refine(startdate => startdate instanceof Date, {
+            message: "Start date must be at least 2 characters.",
+        }),
+        enddate: z.date().refine(enddate => enddate instanceof Date, {
+            message: "End date must be at least 2 characters.",
+        }),
+        workdescription: z.string().min(2, {
+            message: "Main Responsibilities must be at least 2 characters.",
+        }),
+    })
+    .refine(data => data.startdate < data.enddate, {
+        message: "End date must be after start date.",
+        path: ["enddate"],
+    });
 
 const formSchema = z.object({
     experiences: z.array(experienceSchema),
@@ -42,16 +48,16 @@ type PracticalExpFormProps = {
         experiences: Array<{
             companyname: string;
             positiontitle: string;
-            startdate: string;
-            enddate: string;
+            startdate: Date;
+            enddate: Date;
             workdescription: string;
         }>
     ) => void;
     expData: Array<{
         companyname: string;
         positiontitle: string;
-        startdate: string;
-        enddate: string;
+        startdate: Date;
+        enddate: Date;
         workdescription: string;
     }>;
     setIsSavedExp: (saved: boolean) => void;
@@ -73,8 +79,8 @@ export default function PracticalExpForm({
                           {
                               companyname: "",
                               positiontitle: "",
-                              startdate: "",
-                              enddate: "",
+                              startdate: new Date(),
+                              enddate: new Date(),
                               workdescription: "",
                           },
                       ],
@@ -101,8 +107,8 @@ export default function PracticalExpForm({
         append({
             companyname: "",
             positiontitle: "",
-            startdate: "",
-            enddate: "",
+            startdate: new Date(),
+            enddate: new Date(),
             workdescription: "",
         });
     };
@@ -150,16 +156,19 @@ export default function PracticalExpForm({
                                 control={form.control}
                                 name={`experiences.${idx}.startdate`}
                                 render={({ field }) => (
-                                    <FormItem>
+                                    <FormItem className="flex flex-col w-full">
                                         <FormLabel className="font-semibold text-lg">
                                             Start Date
                                         </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                placeholder="MM/YYYY"
-                                                {...field}
-                                            />
-                                        </FormControl>
+                                        <DatePicker
+                                            date={field.value}
+                                            setDate={date =>
+                                                form.setValue(
+                                                    `experiences.${idx}.startdate`,
+                                                    date ? date : new Date()
+                                                )
+                                            }
+                                        />
                                         <FormMessage />
                                     </FormItem>
                                 )}
@@ -168,14 +177,19 @@ export default function PracticalExpForm({
                                 control={form.control}
                                 name={`experiences.${idx}.enddate`}
                                 render={({ field }) => (
-                                    <FormItem>
+                                    <FormItem className="flex flex-col w-full">
                                         <FormLabel className="font-semibold text-lg">
                                             End Date
                                         </FormLabel>
                                         <FormControl>
-                                            <Input
-                                                placeholder="MM/YYYY"
-                                                {...field}
+                                            <DatePicker
+                                                date={field.value}
+                                                setDate={date =>
+                                                    form.setValue(
+                                                        `experiences.${idx}.enddate`,
+                                                        date ? date : new Date()
+                                                    )
+                                                }
                                             />
                                         </FormControl>
                                         <FormMessage />
