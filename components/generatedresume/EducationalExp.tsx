@@ -1,9 +1,10 @@
+import { format } from "date-fns";
 type EducationalExpProps = {
     eduData: Array<{
         schoolname: string;
         studytitle: string;
-        startyear: string;
-        endyear: string;
+        startyear: Date;
+        endyear: Date;
     }>;
 };
 export default function EducationalExp({ eduData }: EducationalExpProps) {
@@ -19,8 +20,8 @@ export default function EducationalExp({ eduData }: EducationalExpProps) {
                             <p className="italic">{edu.studytitle}</p>
                         </div>
                         <div className="italic">
-                            <p>Start Year - {edu.startyear}</p>
-                            <p>End Year - {edu.endyear}</p>
+                            <p>Start Year - {format(edu.startyear, "yyyy")}</p>
+                            <p>End Year - {format(edu.endyear, "yyyy")}</p>
                         </div>
                     </div>
                 ))}

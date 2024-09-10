@@ -15,8 +15,8 @@ function App() {
         Array<{
             schoolname: string;
             studytitle: string;
-            startyear: string;
-            endyear: string;
+            startyear: Date;
+            endyear: Date;
         }>
     >([]);
     const [expData, setExpData] = useState<

@@ -13,21 +13,27 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import FormContentButton from "./FormContentButton";
+import DatePicker from "./DatePicker";
 
-const educationSchema = z.object({
-    schoolname: z.string().min(2, {
-        message: "Username must be at least 2 characters.",
-    }),
-    studytitle: z.string().min(2, {
-        message: "Study title must be at least 2 characters.",
-    }),
-    startyear: z.string().min(2, {
-        message: "Start date must be at least 2 characters.",
-    }),
-    endyear: z.string().min(2, {
-        message: "End date must be at least 2 characters.",
-    }),
-});
+const educationSchema = z
+    .object({
+        schoolname: z.string().min(2, {
+            message: "Username must be at least 2 characters.",
+        }),
+        studytitle: z.string().min(2, {
+            message: "Study title must be at least 2 characters.",
+        }),
+        startyear: z.date().refine(startyear => startyear instanceof Date, {
+            message: "Start year must be at least 2 characters.",
+        }),
+        endyear: z.date().refine(endyear => endyear instanceof Date, {
+            message: "End year must be at least 2 characters.",
+        }),
+    })
+    .refine(data => data.startyear < data.endyear, {
+        message: "End year must be after start year.",
+        path: ["endyear"],
+    });
 
 const formSchema = z.object({
     educations: z.array(educationSchema),
@@ -38,15 +44,15 @@ type EducationalExpFormProps = {
         educations: Array<{
             schoolname: string;
             studytitle: string;
-            startyear: string;
-            endyear: string;
+            startyear: Date;
+            endyear: Date;
         }>
     ) => void;
     eduData: Array<{
         schoolname: string;
         studytitle: string;
-        startyear: string;
-        endyear: string;
+        startyear: Date;
+        endyear: Date;
     }>;
     setIsSavedEdu: (saved: boolean) => void;
 };
@@ -68,8 +74,8 @@ export default function EducationalExpForm({
                           {
                               schoolname: "",
                               studytitle: "",
-                              startyear: "",
-                              endyear: "",
+                              startyear: new Date(),
+                              endyear: new Date(),
                           },
                       ],
         },
@@ -94,8 +100,8 @@ export default function EducationalExpForm({
         append({
             schoolname: "",
             studytitle: "",
-            startyear: "",
-            endyear: "",
+            startyear: new Date(),
+            endyear: new Date(),
         });
     };
 
@@ -142,16 +148,19 @@ export default function EducationalExpForm({
                                 control={form.control}
                                 name={`educations.${idx}.startyear`}
                                 render={({ field }) => (
-                                    <FormItem>
+                                    <FormItem className="flex flex-col w-full">
                                         <FormLabel className="font-semibold text-lg">
                                             Start Year
                                         </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                placeholder="YYYY"
-                                                {...field}
-                                            />
-                                        </FormControl>
+                                        <DatePicker
+                                            date={field.value}
+                                            setDate={date =>
+                                                form.setValue(
+                                                    `educations.${idx}.startyear`,
+                                                    date ? date : new Date()
+                                                )
+                                            }
+                                        />
                                         <FormMessage />
                                     </FormItem>
                                 )}
@@ -160,16 +169,19 @@ export default function EducationalExpForm({
                                 control={form.control}
                                 name={`educations.${idx}.endyear`}
                                 render={({ field }) => (
-                                    <FormItem>
+                                    <FormItem className="flex flex-col w-full">
                                         <FormLabel className="font-semibold text-lg">
                                             End Year
                                         </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                placeholder="YYYY"
-                                                {...field}
-                                            />
-                                        </FormControl>
+                                        <DatePicker
+                                            date={field.value}
+                                            setDate={date =>
+                                                form.setValue(
+                                                    `educations.${idx}.endyear`,
+                                                    date ? date : new Date()
+                                                )
+                                            }
+                                        />
                                         <FormMessage />
                                     </FormItem>
                                 )}
